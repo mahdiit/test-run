@@ -5,14 +5,10 @@ import secrets
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 
-def _auth_value():
+def _current_credentials():
     admin_user = os.getenv("MRH_ADMIN_USER", "admin")
     admin_pass = os.getenv("MRH_ADMIN_PASS", "Sample@Sample")
-    encoded = base64.b64encode(f"{admin_user}:{admin_pass}".encode()).decode()
-    return f"Basic {encoded}"
-
-
-EXPECTED_AUTH = _auth_value()
+    return admin_user, admin_pass
 
 
 class AdminAuthHandler(SimpleHTTPRequestHandler):
@@ -20,8 +16,24 @@ class AdminAuthHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory="/opt/mrh-admin", **kwargs)
 
     def _authorized(self):
-        provided = self.headers.get("Authorization", "")
-        return secrets.compare_digest(provided, EXPECTED_AUTH)
+        auth_header = self.headers.get("Authorization", "")
+        if not auth_header.startswith("Basic "):
+            return False
+
+        encoded = auth_header[6:].strip()
+        try:
+            decoded = base64.b64decode(encoded, validate=True).decode("utf-8")
+        except Exception:
+            return False
+
+        if ":" not in decoded:
+            return False
+
+        provided_user, provided_pass = decoded.split(":", 1)
+        expected_user, expected_pass = _current_credentials()
+        return secrets.compare_digest(provided_user, expected_user) and secrets.compare_digest(
+            provided_pass, expected_pass
+        )
 
     def _request_auth(self):
         self.send_response(401)

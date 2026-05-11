@@ -67,7 +67,6 @@
   - Username: `admin`
   - Password: `Sample@Sample`
 - For safety, change these defaults by setting environment variables `MRH_ADMIN_USER` and `MRH_ADMIN_PASS`.
-- If you change these environment variables, restart the admin service/codespace for changes to take effect.
 - Copy your generated `vless://` link from the panel
 - UUID is generated automatically per Codespace and shown in the GUI
 
@@ -178,7 +177,6 @@ Click **Sync fork** on your forked repository's page.
   - نام کاربری: `admin`
   - رمز عبور: `Sample@Sample`
 - برای امنیت بیشتر، این مقادیر پیش‌فرض را با تنظیم متغیرهای محیطی `MRH_ADMIN_USER` و `MRH_ADMIN_PASS` تغییر دهید.
-- پس از تغییر این متغیرها، سرویس ادمین یا Codespace را ری‌استارت کنید تا اعمال شود.
 - لینک `vless://` تولیدشده را از پنل کپی کنید
 - مقدار UUID به‌صورت خودکار برای هر Codespace ساخته می‌شود و داخل پنل نمایش داده می‌شود
 
