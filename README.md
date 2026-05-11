@@ -66,6 +66,7 @@
 - Login is protected by HTTP Basic Auth:
   - Username: `admin`
   - Password: `Sample@Sample`
+- For safety, change these defaults by setting environment variables `MRH_ADMIN_USER` and `MRH_ADMIN_PASS`.
 - Copy your generated `vless://` link from the panel
 - UUID is generated automatically per Codespace and shown in the GUI
 
@@ -175,6 +176,7 @@ Click **Sync fork** on your forked repository's page.
 - ورود پنل با احراز هویت Basic محافظت شده است:
   - نام کاربری: `admin`
   - رمز عبور: `Sample@Sample`
+- برای امنیت بیشتر، این مقادیر پیش‌فرض را با تنظیم متغیرهای محیطی `MRH_ADMIN_USER` و `MRH_ADMIN_PASS` تغییر دهید.
 - لینک `vless://` تولیدشده را از پنل کپی کنید
 - مقدار UUID به‌صورت خودکار برای هر Codespace ساخته می‌شود و داخل پنل نمایش داده می‌شود
 

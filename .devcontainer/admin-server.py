@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 import base64
 import os
+import secrets
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 
-ADMIN_USER = os.getenv("MRH_ADMIN_USER", "admin")
-ADMIN_PASS = os.getenv("MRH_ADMIN_PASS", "Sample@Sample")
-AUTH_VALUE = "Basic " + base64.b64encode(f"{ADMIN_USER}:{ADMIN_PASS}".encode()).decode()
+def _auth_value():
+    admin_user = os.getenv("MRH_ADMIN_USER", "admin")
+    admin_pass = os.getenv("MRH_ADMIN_PASS", "Sample@Sample")
+    encoded = base64.b64encode(f"{admin_user}:{admin_pass}".encode()).decode()
+    return f"Basic {encoded}"
 
 
 class AdminAuthHandler(SimpleHTTPRequestHandler):
@@ -14,7 +17,8 @@ class AdminAuthHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory="/opt/mrh-admin", **kwargs)
 
     def _authorized(self):
-        return self.headers.get("Authorization", "") == AUTH_VALUE
+        provided = self.headers.get("Authorization", "")
+        return secrets.compare_digest(provided, _auth_value())
 
     def _request_auth(self):
         self.send_response(401)
