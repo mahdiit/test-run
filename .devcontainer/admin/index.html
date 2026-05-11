@@ -43,7 +43,7 @@
 
     function buildLink() {
       const name = extractCodespaceName(window.location.hostname);
-      const endpoint = name ? `${name}-443.app.github.dev` : "REPLACE_WITH_CODESPACE_HOST";
+      const endpoint = name ? `${name}-443.app.github.dev` : "YOUR-CODESPACE-NAME-443.app.github.dev";
       const uuid = encodeURIComponent(uuidEl.value.trim());
       const path = encodeURIComponent(pathEl.value.trim() || "/");
       const remark = encodeURIComponent(remarkEl.value.trim() || "ghtun");
