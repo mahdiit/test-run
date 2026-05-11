@@ -13,7 +13,7 @@
     }
   },
   "postAttachCommand": {
-    "public": "gh codespace ports visibility 443:public 8080:public -c $CODESPACE_NAME",
+    "public": "gh codespace ports visibility 443:public 8080:private -c $CODESPACE_NAME",
     "xray": "/usr/local/bin/start-xray.sh",
     "admin": "/usr/local/bin/start-admin.sh"
   },

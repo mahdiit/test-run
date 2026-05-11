@@ -63,6 +63,9 @@
 #### Step 4: Get Your VLESS Link
 - Open Admin GUI in browser:
   - `https://<YOUR-CODESPACE-NAME>-8080.app.github.dev`
+- Login is protected by HTTP Basic Auth:
+  - Username: `admin`
+  - Password: `Sample@Sample`
 - Copy your generated `vless://` link from the panel
 - UUID is generated automatically per Codespace and shown in the GUI
 
@@ -73,7 +76,7 @@ Paste the link into one of these:
 - **Streisand** (Windows, Mac)
 - **Nekobox** (Windows)
 
-> If you cannot access the GUI URL directly, make sure port `8080` is marked as **Public** in Codespaces.
+> If you cannot access the GUI URL directly, make sure port `8080` is available in Codespaces (recommended: **Private**).
 
 ---
 
@@ -169,6 +172,9 @@ Click **Sync fork** on your forked repository's page.
 #### مرحله ۴: دریافت لینک VLESS
 - پنل گرافیکی را در مرورگر باز کنید:
   - `https://<YOUR-CODESPACE-NAME>-8080.app.github.dev`
+- ورود پنل با احراز هویت Basic محافظت شده است:
+  - نام کاربری: `admin`
+  - رمز عبور: `Sample@Sample`
 - لینک `vless://` تولیدشده را از پنل کپی کنید
 - مقدار UUID به‌صورت خودکار برای هر Codespace ساخته می‌شود و داخل پنل نمایش داده می‌شود
 
@@ -179,7 +185,7 @@ Click **Sync fork** on your forked repository's page.
 - **Streisand** (ویندوز، مک)
 - **Nekobox** (ویندوز)
 
-> اگر پنل گرافیکی باز نشد، در Codespaces بررسی کنید پورت `8080` روی حالت **Public** باشد.
+> اگر پنل گرافیکی باز نشد، در Codespaces بررسی کنید پورت `8080` در دسترس باشد (پیشنهاد: حالت **Private**).
 
 ---
 
