@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import base64
-import hashlib
 import os
 import secrets
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -22,9 +21,7 @@ class AdminAuthHandler(SimpleHTTPRequestHandler):
 
     def _authorized(self):
         provided = self.headers.get("Authorization", "")
-        provided_digest = hashlib.sha256(provided.encode()).digest()
-        expected_digest = hashlib.sha256(EXPECTED_AUTH.encode()).digest()
-        return secrets.compare_digest(provided_digest, expected_digest)
+        return secrets.compare_digest(provided, EXPECTED_AUTH)
 
     def _request_auth(self):
         self.send_response(401)
