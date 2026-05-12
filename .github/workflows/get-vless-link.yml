@@ -1,0 +1,55 @@
+name: '🎁 دریافت خودکار لینک VLESS'
+
+on:
+  workflow_dispatch:
+
+env:
+  GH_PAT: ${{ secrets.GH_TOKEN }}
+
+jobs:
+  get-link:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ساخت کداسپیس موقت
+        run: |
+          echo "🔄 در حال ساخت کداسپیس جدید..."
+          CODESPACE_NAME=$(gh codespace create -r ${{ github.repository }} -m basic -d 30m --status | awk '/Created/ {print $NF}')
+          echo "CODESPACE_NAME=$CODESPACE_NAME" >> $GITHUB_ENV
+          if [ -z "$CODESPACE_NAME" ]; then exit 2; fi
+          echo "✅ کداسپیس با نام $CODESPACE_NAME ساخته شد."
+
+      - name: صبر برای شروع سرویس‌ها
+        run: |
+          echo "⏳ منتظر بمانید تا سرویس‌ها شروع به کار کنند..."
+          sleep 90
+
+      - name: دریافت لاگ و استخراج لینک
+        run: |
+          echo "🔍 در حال جستجوی لینک VLESS در خروجی کداسپیس..."
+          ATTEMPTS=0
+          MAX_ATTEMPTS=12
+          while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
+            VLESS_LINK=$(gh codespace logs -c ${{ env.CODESPACE_NAME }} 2>&1 | grep -oE 'vless://[^ ]+' | head -1)
+            if [ -n "$VLESS_LINK" ]; then
+              echo "VLESS_LINK=$VLESS_LINK" >> $GITHUB_ENV
+              echo "✅ لینک پیدا شد!"
+              break
+            fi
+            echo "🔄 پیدا نشد، صبر و تکرار... (تعداد تلاش: $ATTEMPTS)"
+            sleep 15
+            ATTEMPTS=$((ATTEMPTS + 1))
+          done
+          if [ -z "$VLESS_LINK" ]; then
+            echo "❌ خطا: لینک پس از جستجو پیدا نشد."
+            exit 1
+          fi
+
+      - name: نمایش لینک به کاربر
+        run: |
+          echo "🚀 لینک VLESS شما آماده است:"
+          echo "-----------------------------------------"
+          echo "${{ env.VLESS_LINK }}"
+          echo "-----------------------------------------"
+          echo "✨ این لینک را کپی کرده و در کلاینت خود وارد کنید."
+          echo "🆔 شناسه کداسپیس: ${{ env.CODESPACE_NAME }}"
+          echo "🌐 برای مدیریت: https://github.com/codespaces"
